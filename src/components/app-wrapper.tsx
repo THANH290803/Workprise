@@ -97,6 +97,8 @@ export function AppWrapper({ children }: AppWrapperProps) {
         return "Thống kê"
       case "team":
         return "Quản lý nhóm"
+      case "roles":
+        return "Quản lý nhóm"
       case "departments":
         return "Quản lý phòng ban"
       case "profile":
@@ -138,6 +140,8 @@ export function AppWrapper({ children }: AppWrapperProps) {
         return "Báo cáo và phân tích hiệu suất làm việc"
       case "team":
         return "Quản lý thành viên và phân quyền"
+      case "roles":
+        return "Quản lý vai trò và phân quyền trong hệ thống"
       case "departments":
         return "Quản lý các phòng ban trong tổ chức"
       case "profile":

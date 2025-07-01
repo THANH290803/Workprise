@@ -105,11 +105,7 @@ export function DepartmentsPage() {
   return (
     <div className="space-y-8 p-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Quản lý tổ chức</h1>
-          <p className="text-gray-600 mt-1">Quản lý các phòng ban và cơ cấu tổ chức</p>
-        </div>
+      <div className="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4">
         <Button onClick={() => router.push("/departments/create")} size="lg" className="px-6">
           <Plus className="h-4 w-4 mr-2" />
           Tạo phòng ban
@@ -127,7 +123,7 @@ export function DepartmentsPage() {
             className="pl-10 h-12"
           />
         </div>
-        <Button variant="outline" size="lg" className="px-6">
+        <Button variant="outline" size="lg" className="px-6" style={{height: '48px'}}>
           <Filter className="h-4 w-4 mr-2" />
           Bộ lọc
         </Button>

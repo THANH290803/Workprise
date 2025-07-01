@@ -16,6 +16,7 @@ import {
   Settings,
   LogOut,
   CheckCircle,
+  UserCheck,
 } from "lucide-react"
 
 const menuItems = [
@@ -48,6 +49,11 @@ const menuItems = [
     title: "Nhóm",
     href: "/team",
     icon: Users,
+  },
+  {
+    title: "Vai trò",
+    href: "/roles",
+    icon: UserCheck,
   },
   {
     title: "Quản lý tổ chức",
@@ -111,7 +117,7 @@ export function AppSidebar() {
       <nav className="flex-1 px-4">
         <ul className="space-y-1">
           {menuItems.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
             return (
               <li key={item.href}>
                 <Link

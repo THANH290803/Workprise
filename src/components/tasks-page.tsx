@@ -279,13 +279,7 @@ export function TasksPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <div className="space-y-8 p-8">
         {/* Header Section */}
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
-              Quản lý công việc
-            </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400">Xem và quản lý tất cả công việc từ mọi dự án</p>
-          </div>
+        <div className="flex items-center justify-end">
           <Button
             onClick={handleCreateTask}
             className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 px-6 py-3 text-base font-semibold"
@@ -404,7 +398,7 @@ export function TasksPage() {
                 </div>
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[180px] h-12 border-slate-200 focus:border-blue-500">
+                <SelectTrigger className="w-[180px] h-12 border-slate-200 focus:border-blue-500" style={{height: '48px'}}>
                   <SelectValue placeholder="Trạng thái" />
                 </SelectTrigger>
                 <SelectContent>
@@ -417,7 +411,7 @@ export function TasksPage() {
                 </SelectContent>
               </Select>
               <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-                <SelectTrigger className="w-[180px] h-12 border-slate-200 focus:border-blue-500">
+                <SelectTrigger className="w-[180px] h-12 border-slate-200 focus:border-blue-500" style={{height: '48px'}}>
                   <SelectValue placeholder="Độ ưu tiên" />
                 </SelectTrigger>
                 <SelectContent>
@@ -430,7 +424,7 @@ export function TasksPage() {
                 </SelectContent>
               </Select>
               <Select value={projectFilter} onValueChange={setProjectFilter}>
-                <SelectTrigger className="w-[200px] h-12 border-slate-200 focus:border-blue-500">
+                <SelectTrigger className="w-[200px] h-12 border-slate-200 focus:border-blue-500" style={{height: '48px'}}>
                   <SelectValue placeholder="Dự án" />
                 </SelectTrigger>
                 <SelectContent>
