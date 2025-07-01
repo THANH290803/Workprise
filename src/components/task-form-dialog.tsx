@@ -86,7 +86,7 @@ export function TaskFormDialog({ task, isOpen, onOpenChange, onSave, mode, defau
     priority: "Trung bình",
     status: "todo",
     assignee: "",
-    dueDate: null as Date | null,
+    duration: "",
     tags: [] as string[],
     project: defaultProject || "",
   })
@@ -209,7 +209,7 @@ export function TaskFormDialog({ task, isOpen, onOpenChange, onSave, mode, defau
                   value={formData.priority}
                   onValueChange={(value) => setFormData((prev) => ({ ...prev, priority: value }))}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12 text-base w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -228,7 +228,7 @@ export function TaskFormDialog({ task, isOpen, onOpenChange, onSave, mode, defau
                   value={formData.status}
                   onValueChange={(value) => setFormData((prev) => ({ ...prev, status: value }))}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12 text-base w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -250,7 +250,7 @@ export function TaskFormDialog({ task, isOpen, onOpenChange, onSave, mode, defau
                   value={formData.assignee}
                   onValueChange={(value) => setFormData((prev) => ({ ...prev, assignee: value }))}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12 text-base w-full">
                     <SelectValue placeholder="Chọn người thực hiện" />
                   </SelectTrigger>
                   <SelectContent>
@@ -264,32 +264,16 @@ export function TaskFormDialog({ task, isOpen, onOpenChange, onSave, mode, defau
               </div>
 
               <div className="space-y-2">
-                <Label>Hạn hoàn thành</Label>
-                <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !formData.dueDate && "text-muted-foreground",
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.dueDate ? format(formData.dueDate, "dd/MM/yyyy", { locale: vi }) : "Chọn ngày"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={formData.dueDate || undefined}
-                      onSelect={(date) => {
-                        setFormData((prev) => ({ ...prev, dueDate: date || null }))
-                        setCalendarOpen(false)
-                      }}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <Label>Khoảng thời gian hoàn thành</Label>
+                <input
+                  type="text"
+                  placeholder="Khoảng thời gian hoàn thành"
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  value={formData.duration}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, duration: e.target.value }))
+                  }
+                />
               </div>
             </div>
 

@@ -8,7 +8,7 @@ import { AppWrapper } from "@/components/app-wrapper"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "TaskFlow - Quản lý dự án",
+  title: "WorkPrise - Quản lý dự án",
   description: "Ứng dụng quản lý dự án và công việc hiệu quả",
   generator: "v0.dev",
 }

@@ -107,7 +107,7 @@ export function AppSidebar() {
             <CheckCircle className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-semibold text-gray-900">TaskFlow</h1>
+            <h1 className="text-lg font-semibold text-gray-900">WorkPrise</h1>
             <p className="text-sm text-gray-500">Quản lý công việc</p>
           </div>
         </div>

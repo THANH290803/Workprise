@@ -392,10 +392,6 @@ export function KanbanBoard({ project, onBackToProjects }: KanbanBoardProps) {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Quay lại dự án
           </Button>
-          <div>
-            <h2 className="text-2xl font-bold">{project.name}</h2>
-            <p className="text-muted-foreground">Kanban Board</p>
-          </div>
         </div>
         <Button onClick={() => handleCreateTask()}>
           <Plus className="h-4 w-4 mr-2" />

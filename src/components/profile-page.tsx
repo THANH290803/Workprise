@@ -119,11 +119,7 @@ export function ProfilePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Hồ sơ cá nhân</h1>
-          <p className="text-muted-foreground">Quản lý thông tin và cài đặt tài khoản của bạn</p>
-        </div>
+      <div className="flex items-center justify-end">
         <div className="flex items-center gap-2">
           {isEditing ? (
             <>

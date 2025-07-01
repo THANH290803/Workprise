@@ -11,6 +11,19 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, Save } from "lucide-react"
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover"
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+// import { ScrollArea } from "@/components/ui/scroll-area"
+import { Check, UserPlus, Users } from "lucide-react"
 
 const sampleProjects = {
   "website-redesign": {
@@ -45,6 +58,7 @@ export default function EditProjectPage() {
     priority: "Trung bình",
     startDate: "",
     endDate: "",
+    userIds: [] as number[],
   })
 
   useEffect(() => {
@@ -57,6 +71,7 @@ export default function EditProjectPage() {
         priority: project.priority,
         startDate: project.startDate,
         endDate: project.endDate,
+        userIds: [],
       })
     }
   }, [projectId])
@@ -74,6 +89,15 @@ export default function EditProjectPage() {
       setIsSubmitting(false)
     }
   }
+
+  const mockUsers = [
+      { id: 1, name: "Nguyễn Văn A" },
+      { id: 2, name: "Trần Thị B" },
+      { id: 3, name: "Lê Văn C" },
+    ]
+  
+    const [users] = useState(mockUsers)
+    const [searchTerm, setSearchTerm] = useState("")
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -119,7 +143,7 @@ export default function EditProjectPage() {
                       value={formData.status}
                       onValueChange={(value) => setFormData((prev) => ({ ...prev, status: value }))}
                     >
-                      <SelectTrigger className="h-12 text-base w-full" style={{height: '48px'}}>
+                      <SelectTrigger className="h-12 text-base w-full" style={{ height: '48px' }}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -145,7 +169,7 @@ export default function EditProjectPage() {
                   />
                 </div>
 
-                <div className="grid gap-8 lg:grid-cols-3">
+                <div className="grid gap-8 lg:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="priority" className="text-sm font-medium text-gray-900">
                       Độ ưu tiên
@@ -154,7 +178,7 @@ export default function EditProjectPage() {
                       value={formData.priority}
                       onValueChange={(value) => setFormData((prev) => ({ ...prev, priority: value }))}
                     >
-                      <SelectTrigger className="h-12 text-base w-full" style={{height: '48px'}}>
+                      <SelectTrigger className="h-12 text-base w-full" style={{ height: '48px' }}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -165,6 +189,85 @@ export default function EditProjectPage() {
                     </Select>
                   </div>
 
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-900">Người tham gia</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-between h-12 text-base">
+                          {formData.userIds.length === 0 && "Chọn thành viên"}
+                          {formData.userIds.length === 1 &&
+                            users.find((u) => u.id === formData.userIds[0])?.name}
+                          {formData.userIds.length === 2 &&
+                            users
+                              .filter((u) => formData.userIds.includes(u.id))
+                              .map((u) => u.name)
+                              .join(", ")}
+                          {formData.userIds.length > 2 && (() => {
+                            const selectedUsers = users.filter((u) => formData.userIds.includes(u.id))
+                            const firstTwoNames = selectedUsers.slice(0, 2).map((u) => u.name).join(", ")
+                            const extraCount = formData.userIds.length - 2
+                            return `${firstTwoNames}, +${extraCount} người đã chọn`
+                          })()}
+                          <Users className="w-4 h-4 ml-2" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[635px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder="Tìm kiếm người dùng..."
+                            value={searchTerm}
+                            onValueChange={setSearchTerm}
+                            className="h-10"
+                          />
+                          <CommandList className="max-h-60 overflow-y-auto">
+                            <CommandItem
+                              onSelect={() => {
+                                const allUserIds = users.map((u) => u.id)
+                                const isAllSelected = formData.userIds.length === users.length
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  userIds: isAllSelected ? [] : allUserIds,
+                                }))
+                              }}
+                              className="font-semibold text-blue-600"
+                            >
+                              <UserPlus className="w-4 h-4 mr-2" />
+                              {formData.userIds.length === users.length
+                                ? "Bỏ chọn tất cả"
+                                : "Chọn tất cả"}
+                            </CommandItem>
+
+                            {users
+                              .filter((user) =>
+                                user.name.toLowerCase().includes(searchTerm.toLowerCase())
+                              )
+                              .map((user) => (
+                                <CommandItem
+                                  key={user.id}
+                                  onSelect={() => {
+                                    setFormData((prev) => ({
+                                      ...prev,
+                                      userIds: prev.userIds.includes(user.id)
+                                        ? prev.userIds.filter((id) => id !== user.id)
+                                        : [...prev.userIds, user.id],
+                                    }))
+                                  }}
+                                  className="flex items-center justify-between"
+                                >
+                                  <span>{user.name}</span>
+                                  {formData.userIds.includes(user.id) && (
+                                    <Check className="w-4 h-4 text-green-500" />
+                                  )}
+                                </CommandItem>
+                              ))}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
+
+                <div className="grid gap-8 lg:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="startDate" className="text-sm font-medium text-gray-900">
                       Ngày bắt đầu
