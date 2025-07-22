@@ -18,6 +18,7 @@ import {
   CheckCircle,
   UserCheck,
 } from "lucide-react"
+import { useEffect, useState } from "react"
 
 const menuItems = [
   {
@@ -92,6 +93,24 @@ export function AppSidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
+  const [user, setUser] = useState<{ name: string; role_name: string; avatar: string | null } | null>(null)
+
+  useEffect(() => {
+    try {
+      const userData = localStorage.getItem("user")
+      if (userData) {
+        const parsed = JSON.parse(userData)
+        setUser({
+          name: parsed.name,
+          role_name: parsed.role_name,
+          avatar: parsed.avatar,
+        })
+      }
+    } catch (error) {
+      console.error("Lỗi khi đọc user từ localStorage:", error)
+    }
+  }, [])
+
   const handleLogout = () => {
     localStorage.removeItem("taskflow_auth")
     localStorage.removeItem("taskflow_user")
@@ -160,8 +179,8 @@ export function AppSidebar() {
             <AvatarFallback className="bg-gray-100 text-gray-600 font-medium text-sm">NVA</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">Nguyễn Văn A</p>
-            <p className="text-xs text-gray-500 truncate">Project Manager</p>
+            <p className="text-sm font-medium text-gray-900 truncate">{user?.name || "Chưa đăng nhập"}</p>
+            <p className="text-xs text-gray-500 truncate">{user?.role_name || "Vai trò chưa xác định"}</p>
           </div>
         </div>
 

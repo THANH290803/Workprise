@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ArrowLeft, Edit, Mail, Phone, Calendar, Building, User, Briefcase } from "lucide-react"
+import { ArrowLeft, Edit, Mail, Phone, MapPin, Building, User, Briefcase } from "lucide-react"
 
 const sampleMembers = {
   "member-1": {
@@ -127,9 +127,9 @@ export default function TeamMemberDetailsPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <Calendar className="h-5 w-5 text-gray-500" />
+                      <MapPin className="h-5 w-5 text-gray-500" />
                       <div>
-                        <p className="font-medium text-base">Ngày bắt đầu</p>
+                        <p className="font-medium text-base">Địa chỉ nhân viên</p>
                         <p className="text-gray-600">{new Date(member.startDate).toLocaleDateString("vi-VN")}</p>
                       </div>
                     </div>
@@ -183,7 +183,7 @@ export default function TeamMemberDetailsPage() {
               </Card>
 
               {/* Achievements */}
-              <Card className="shadow-lg border-0">
+              {/* <Card className="shadow-lg border-0">
                 <CardHeader>
                   <CardTitle className="text-xl">Thành tích</CardTitle>
                 </CardHeader>
@@ -202,7 +202,7 @@ export default function TeamMemberDetailsPage() {
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </div>
         </div>

@@ -49,10 +49,10 @@ export default function CreateDepartmentPage() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Quay lại
             </Button>
-            <div>
+            {/* <div>
               <h1 className="text-3xl font-bold text-gray-900">Tạo phòng ban mới</h1>
               <p className="text-gray-600 mt-1">Thêm phòng ban mới vào hệ thống</p>
-            </div>
+            </div> */}
           </div>
 
           <Card className="shadow-lg border-0 w-full">
@@ -91,20 +91,6 @@ export default function CreateDepartmentPage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="description" className="text-sm font-medium text-gray-900">
-                    Mô tả phòng ban
-                  </Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                    placeholder="Mô tả chức năng và nhiệm vụ của phòng ban..."
-                    rows={6}
-                    className="text-base resize-none"
-                  />
-                </div>
-
                 <div className="grid gap-8 lg:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="manager" className="text-sm font-medium text-gray-900">
@@ -114,7 +100,7 @@ export default function CreateDepartmentPage() {
                       value={formData.manager}
                       onValueChange={(value) => setFormData((prev) => ({ ...prev, manager: value }))}
                     >
-                      <SelectTrigger className="h-12 text-base">
+                      <SelectTrigger className="h-12 text-base w-full" style={{ height: '48px' }}>
                         <SelectValue placeholder="Chọn trưởng phòng..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -153,34 +139,18 @@ export default function CreateDepartmentPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-8 lg:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="budget" className="text-sm font-medium text-gray-900">
-                      Ngân sách (VNĐ)
-                    </Label>
-                    <Input
-                      id="budget"
-                      type="number"
-                      value={formData.budget}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, budget: e.target.value }))}
-                      placeholder="1000000000"
-                      className="h-12 text-base"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="goals" className="text-sm font-medium text-gray-900">
-                      Mục tiêu phòng ban
-                    </Label>
-                    <Textarea
-                      id="goals"
-                      value={formData.goals}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, goals: e.target.value }))}
-                      placeholder="Mục tiêu và KPI của phòng ban..."
-                      rows={4}
-                      className="text-base resize-none"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-sm font-medium text-gray-900">
+                    Mô tả phòng ban
+                  </Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+                    placeholder="Mô tả chức năng và nhiệm vụ của phòng ban..."
+                    rows={6}
+                    className="text-base resize-none"
+                  />
                 </div>
 
                 <div className="flex gap-4 pt-8 border-t border-gray-200">

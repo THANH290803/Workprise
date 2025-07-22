@@ -24,7 +24,8 @@ import {
   Clock,
   Target,
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const userStats = [
   {
@@ -95,16 +96,34 @@ const skills = [
 
 export function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
+  const [userRole, setUserRole] = useState<string | null>(null)
+
   const [profileData, setProfileData] = useState({
-    name: "Nguyễn Văn A",
-    email: "nguyen.van.a@company.com",
-    phone: "+84 123 456 789",
-    location: "Hà Nội, Việt Nam",
-    position: "Project Manager",
-    department: "Phát triển sản phẩm",
-    joinDate: "15/03/2022",
-    bio: "Tôi là một Project Manager với hơn 5 năm kinh nghiệm trong việc quản lý các dự án công nghệ. Đam mê tối ưu hóa quy trình làm việc và xây dựng đội nhóm hiệu quả.",
+    name: "",
+    email: "",
+    phone: "",
+    location: "",
+    position: "",
+    department: "",
+    bio: "",
   })
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user")
+    if (storedUser) {
+      const user = JSON.parse(storedUser)
+      setProfileData({
+        name: user.name || "",
+        email: user.email || "",
+        phone: user.phone_number || "",
+        location: user.address || "",
+        position: user.role_name || "",
+        department: user.department_name || "",
+        bio: "Tôi là một Project Manager với hơn 5 năm kinh nghiệm trong việc quản lý các dự án công nghệ.",
+      })
+      setUserRole(user.role_name)
+    }
+  }, [])
 
   const handleSave = () => {
     // Logic để lưu thông tin profile
@@ -250,12 +269,23 @@ export function ProfilePage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="position">Chức vụ</Label>
-                  {isEditing ? (
-                    <Input
-                      id="position"
+                  {isEditing && userRole === "Admin" ? (
+                    <Select
+                      onValueChange={(value) =>
+                        setProfileData({ ...profileData, position: value })
+                      }
                       value={profileData.position}
-                      onChange={(e) => setProfileData({ ...profileData, position: e.target.value })}
-                    />
+                    // className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+                    >
+                      <SelectTrigger className="h-12 text-base w-full">
+                        <SelectValue placeholder="Chọn chức vụ" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Project Manager">Project Manager</SelectItem>
+                        <SelectItem value="Developer">Developer</SelectItem>
+                        <SelectItem value="Tester">Tester</SelectItem>
+                      </SelectContent>
+                    </Select>
                   ) : (
                     <div className="flex items-center gap-2 text-sm">
                       <Briefcase className="h-4 w-4 text-muted-foreground" />
@@ -265,11 +295,29 @@ export function ProfilePage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Ngày gia nhập</Label>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    {profileData.joinDate}
-                  </div>
+                  <Label>Phòng ban</Label>
+                  {isEditing && userRole === "Admin" ? (
+                    <Select
+                      value={profileData.department}
+                      onValueChange={(value) =>
+                        setProfileData({ ...profileData, department: value })
+                      }
+                    >
+                      <SelectTrigger className="h-12 text-base w-full">
+                        <SelectValue placeholder="Chọn phòng ban" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Phát triển sản phẩm">Phát triển sản phẩm</SelectItem>
+                        <SelectItem value="Hành chính">Hành chính</SelectItem>
+                        <SelectItem value="Kinh doanh">Kinh doanh</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <div className="flex items-center gap-2 text-sm">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      {profileData.department}
+                    </div>
+                  )}
                 </div>
               </div>
 

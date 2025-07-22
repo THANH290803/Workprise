@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react"
 import { LoginPage } from "@/components/login-page"
 import { useRouter } from "next/navigation"
+import api from "@/lib/api"
 
 export default function LoginPageRoute() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Check if already logged in
     const checkAuth = () => {
       try {
         const isAuthenticated = localStorage.getItem("taskflow_auth") === "true"
@@ -18,7 +18,7 @@ export default function LoginPageRoute() {
           return
         }
       } catch (error) {
-        console.error("Error checking auth:", error)
+        console.error("Lỗi kiểm tra đăng nhập:", error)
       }
       setIsLoading(false)
     }
@@ -29,24 +29,26 @@ export default function LoginPageRoute() {
 
   const handleLogin = async (credentials: { email: string; password: string; rememberMe: boolean }) => {
     try {
-      // In a real app, this would be an API call
-      const userData = {
-        name: "Nguyễn Văn A",
+      const response = await api.post("/users/login", {
         email: credentials.email,
-        role: "Project Manager",
-      }
+        password: credentials.password,
+      })
 
-      // Save authentication state
-      localStorage.setItem("taskflow_user", JSON.stringify(userData))
+      const { token, user } = response.data
+
+      // Lưu vào localStorage
+      localStorage.setItem("token", token)
+      localStorage.setItem("user", JSON.stringify(user))
       localStorage.setItem("taskflow_auth", "true")
 
-      // Force a small delay to ensure localStorage is written
+      // Đợi 1 chút cho chắc chắn localStorage được ghi
       await new Promise((resolve) => setTimeout(resolve, 100))
 
-      // Redirect to dashboard
+      // Điều hướng sang dashboard
       window.location.href = "/dashboard"
-    } catch (error) {
-      console.error("Login error:", error)
+    } catch (error: any) {
+      // Ném lỗi lại để hiển thị trong giao diện LoginPage
+      throw error
     }
   }
 

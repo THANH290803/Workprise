@@ -45,18 +45,14 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     setSuccess("")
     setIsLoading(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      if (email === "admin@taskflow.com" && password === "123456") {
-        setSuccess("Đăng nhập thành công! Đang chuyển hướng...")
-        setTimeout(() => {
-          onLogin({ email, password, rememberMe })
-        }, 1000)
-      } else {
-        setError("Email hoặc mật khẩu không chính xác")
-      }
+    try {
+      await onLogin({ email, password, rememberMe })
+      setSuccess("Đăng nhập thành công! Đang chuyển hướng...")
+    } catch (err: any) {
+      setError(err?.response?.data?.message || "Email hoặc mật khẩu không chính xác")
+    } finally {
       setIsLoading(false)
-    }, 1500)
+    }
   }
 
   const features = [
